@@ -1174,7 +1174,9 @@ def analyze((m,p,d,t,u,i,a),lineCtr):
             print msg, lineCtr+1
     elif parsedAction[0] == '226' and ((parsedAction[1] == 'ABOR' and parsedAction[2] == 'command') or \
                                        (parsedAction[1] == 'Transfer' and (parsedAction[2] == 'OK' or \
-                                                                           parsedAction[2] == 'OK,'))):
+                                                                           parsedAction[2] == 'OK,')) or \
+                                       (parsedAction[1] == 'Successfully' and (parsedAction[2] == 'transferred' or \
+                                                                           parsedAction[2] == 'transferred,'))):
         tempM = G.events.getStored(m,u,p,True)
         if grabAfterUser(tempM,2) == 'began downloading' or grabAfterUser(tempM,2) == 'restarted download':
             msg = "User '" + u + "' finished downloading '" + G.events.getHeldStatistic(m,u,p)[5] + "'."
