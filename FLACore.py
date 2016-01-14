@@ -1987,7 +1987,7 @@ def processAndExecute(argv,nextArg):
     discInst = None
 
     G.logFile = argv[nextArg]
-    f = open(G.logFile)
+    f = open(G.logFile, encoding="utf-8")
     lineCtr = 0
     G.line = 1
     if (G.pFlag and not G.sFlag and (G.parseFrom != -1 or G.parseTill != -1))  or (G.fFlag and G.specifiedLineNum == -1): 
