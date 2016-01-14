@@ -1175,7 +1175,9 @@ def analyze(xxx_todo_changeme,lineCtr):
             print(msg, lineCtr+1)
     elif parsedAction[0] == '226' and ((parsedAction[1] == 'ABOR' and parsedAction[2] == 'command') or \
                                        (parsedAction[1] == 'Transfer' and (parsedAction[2] == 'OK' or \
-                                                                           parsedAction[2] == 'OK,'))):
+                                                                           parsedAction[2] == 'OK,')) or \
+                                       (parsedAction[1] == 'Successfully' and (parsedAction[2] == 'transferred' or \
+                                                                           parsedAction[2] == 'transferred,'))):
         tempM = G.events.getStored(m,u,p,True)
         if grabAfterUser(tempM,2) == 'began downloading' or grabAfterUser(tempM,2) == 'restarted download':
             msg = "User '" + u + "' finished downloading '" + G.events.getHeldStatistic(m,u,p)[5] + "'."
@@ -1986,7 +1988,7 @@ def processAndExecute(argv,nextArg):
     discInst = None
 
     G.logFile = argv[nextArg]
-    f = open(G.logFile)
+    f = open(G.logFile, encoding="utf-8")
     lineCtr = 0
     G.line = 1
     if (G.pFlag and not G.sFlag and (G.parseFrom != -1 or G.parseTill != -1))  or (G.fFlag and G.specifiedLineNum == -1): 
