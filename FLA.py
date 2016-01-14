@@ -35,7 +35,7 @@ def isPythonVersion(version):
 
 if __name__ == '__main__':
     if not isPythonVersion(2.6):
-        print "You are running Python version", sys.version[:3] + ", version 2.6 or 2.7 is required. Please update. Aborting..."
+        print("You are running Python version", sys.version[:3] + ", version 2.6 or 2.7 is required. Please update. Aborting...")
         exit()
     import FLACore
     FLACore.main(sys.argv)

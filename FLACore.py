@@ -220,8 +220,8 @@ class userPortLst(object):
         self.lagParsedIndex += 1
         return self.parsedList[self.lagParsedIndex]
     def prnt(self):
-        print self.action[self.listIndex],
-        print self.lineNum[self.listIndex]
+        print(self.action[self.listIndex], end=' ')
+        print(self.lineNum[self.listIndex])
         self.listIndex += 1
     def getAllStatistics(self):
         return self.statistics
@@ -303,7 +303,7 @@ class userEvntLst(object):
     def getParsed(self,p):
         return self.portList[self.findPortIndex(p)].getParsed()
     def prnt(self,p):
-        print self.user,
+        print(self.user, end=' ')
         self.portList[self.findPortIndex(p)].prnt()
     def fullStatisticWrite(self,fileToWriteTo,u):
         DLPathDict = {}
@@ -372,7 +372,7 @@ class userEvntLst(object):
         if DLPathDict != {}:
             w.write('    ')
             w.write('DOWNLOADS:\n')
-            for k,v in DLPathDict.items():
+            for k,v in list(DLPathDict.items()):
                 counter = 0
                 for i in range(len(v)):
                     if counter == 0: #if first run...
@@ -399,7 +399,7 @@ class userEvntLst(object):
         if RESTPathDict != {}:
             w.write('    ')
             w.write('RESTARTED DOWNLOADS:\n')
-            for k,v in RESTPathDict.items():
+            for k,v in list(RESTPathDict.items()):
                 counter = 0
                 for i in range(len(v)):
                     if counter == 0: #if first run...
@@ -425,7 +425,7 @@ class userEvntLst(object):
         if ULPathDict != {}:
             w.write('    ')
             w.write('UPLOADS:\n')
-            for k,v in ULPathDict.items():
+            for k,v in list(ULPathDict.items()):
                 counter = 0
                 for i in range(len(v)):
                     if counter == 0: #if first run...
@@ -450,7 +450,7 @@ class userEvntLst(object):
         if APPathDict != {}:
             w.write('    ')
             w.write('APPENDS:\n')
-            for k,v in APPathDict.items():
+            for k,v in list(APPathDict.items()):
                 counter = 0
                 for i in range(len(v)):
                     if counter == 0: #if first run...
@@ -475,7 +475,7 @@ class userEvntLst(object):
         if MDPathDict != {}:
             w.write('    ')
             w.write('MADE DIRECTORIES:\n')
-            for k,v in MDPathDict.items():
+            for k,v in list(MDPathDict.items()):
                 counter = 0
                 for i in range(len(v)):
                     if counter == 0: #if first run...
@@ -500,7 +500,7 @@ class userEvntLst(object):
         if RMDPathDict != {}:
             w.write('    ')
             w.write('REMOVED DIRECTORIES:\n')
-            for k,v in RMDPathDict.items():
+            for k,v in list(RMDPathDict.items()):
                 counter = 0
                 for i in range(len(v)):
                     if counter == 0: #if first run...
@@ -525,7 +525,7 @@ class userEvntLst(object):
         if DFPathDict != {}:
             w.write('    ')
             w.write('DELETED FILES:\n')
-            for k,v in DFPathDict.items():
+            for k,v in list(DFPathDict.items()):
                 counter = 0
                 for i in range(len(v)):
                     if counter == 0: #if first run...
@@ -550,7 +550,7 @@ class userEvntLst(object):
         if RNPathDict != {}:
             w.write('    ')
             w.write('RENAMES:\n')
-            for k,v in RNPathDict.items():
+            for k,v in list(RNPathDict.items()):
                 counter = 0
                 for i in range(len(v)):
                     if counter == 0: #if first run...
@@ -715,8 +715,8 @@ class evntLst(object):
         try:
             self.messages[self.findMsgIndex(m)].updateStatistic(u,p,o,s)
         except TypeError:
-            print "Error: Log file continuity problem at line " + str(G.line) + \
-            ". Most likely due to user or port popping up out of nowhere. Contact developer if you can't figure out what's wrong."
+            print("Error: Log file continuity problem at line " + str(G.line) + \
+            ". Most likely due to user or port popping up out of nowhere. Contact developer if you can't figure out what's wrong.")
             exit()
     def getStatistic(self,m,u,p):
         return self.messages[self.findMsgIndex(m)].getStatistic(u,p)
@@ -769,7 +769,7 @@ class evntLst(object):
             if logins[i][0] == item[0]:
                 if logins[i][1] == 'login':
                     return (logins[i],i)
-                print 'problem in func findLogin()'
+                print('problem in func findLogin()')
         return (None,G.arbitraryIndexVal)
     
     def checkForLineInPCandidates(self,parseCandidates):
@@ -864,7 +864,7 @@ class evntLst(object):
             (AA,lineCtr) = G.AAs[itr]
             (m,u,p) = G.changeListArray[itr]
             if grabAfterUser(AA,1) == 'disconnected.' or grabAfterUser(AA,2) == 'successfully logged':
-                print self.getParsed(m, u, p)
+                print(self.getParsed(m, u, p))
             
     def analyzedPrint(self,lC):
         goAhead = False
@@ -876,7 +876,7 @@ class evntLst(object):
             if os.path.exists(G.analyzedResultsFile):
                 yn = confirmation(G.analyzedResultsFile + " exists, OK to overwrite? (Y/N)")
                 if yn in ('N','n'):
-                    print G.analyzedResultsFile, "not overwritten."
+                    print(G.analyzedResultsFile, "not overwritten.")
                 else:
                     goAhead = True
             else:
@@ -884,9 +884,9 @@ class evntLst(object):
                 
         if G.FFlag or goAhead:
             if os.path.exists(G.analyzedResultsFile):
-                print "Overwriting", G.analyzedResultsFile + "..."
+                print("Overwriting", G.analyzedResultsFile + "...")
             else:
-                print "Writing", G.analyzedResultsFile + "..."
+                print("Writing", G.analyzedResultsFile + "...")
             
             w = open(G.analyzedResultsFile, 'w')
     
@@ -912,9 +912,9 @@ class evntLst(object):
             if os.path.exists(G.statisticsWriteFile):
                 yn = confirmation(G.statisticsWriteFile + " exists, OK to overwrite? (Y/N)")
                 if yn in ('N','n'):
-                    print G.statisticsWriteFile, "not overwritten."
+                    print(G.statisticsWriteFile, "not overwritten.")
                 else:
-                    print "Overwriting", G.statisticsWriteFile + "..."
+                    print("Overwriting", G.statisticsWriteFile + "...")
                     goAhead = True
             else:
                 goAhead = True
@@ -941,7 +941,7 @@ class evntLst(object):
             if os.path.exists(G.statisticsFile):
                 yn = confirmation(G.statisticsFile + " exists, OK to overwrite? (Y/N)")
                 if yn in ('N','n'):
-                    print G.statisticsFile, "not overwritten."
+                    print(G.statisticsFile, "not overwritten.")
                 else:
                     goAhead = True
             else:
@@ -949,9 +949,9 @@ class evntLst(object):
                     
         if G.FFlag or goAhead:
             if os.path.exists(G.statisticsFile):
-                print "Overwriting", G.statisticsFile + "..."
+                print("Overwriting", G.statisticsFile + "...")
             else:
-                print "Writing", G.statisticsFile + "..."
+                print("Writing", G.statisticsFile + "...")
             
             w = open(G.statisticsFile, 'w')
             w.write('STATISTICS SUMMARY:')
@@ -1015,7 +1015,7 @@ class changeList(object):
         elif u != G.prevUser and p != G.prevPort:
             self.cList.append((u,str(p)))
         elif m != G.prevMsg:
-            print "Message should never show up alone, this is not supported. Contact developer. Aborting..."
+            print("Message should never show up alone, this is not supported. Contact developer. Aborting...")
             exit()
         elif u != G.prevUser:
             self.addUser(u)
@@ -1025,7 +1025,7 @@ class changeList(object):
             self.cList.append('')
 
     def prnt(self):
-        print self.cList
+        print(self.cList)
 
     def getNext(self,i):
         '''
@@ -1121,7 +1121,8 @@ def joinFileName(i,fline,length):
         return ' '.join((fline[i],joinFileName(i+1,fline,length)))
 
 #interpret each line action and do some other housekeeping
-def analyze((m,p,d,t,u,i,a),lineCtr):
+def analyze(xxx_todo_changeme,lineCtr):
+    (m,p,d,t,u,i,a) = xxx_todo_changeme
     msg = ''
     tempM = ''
     parsedAction = a.split()
@@ -1132,7 +1133,7 @@ def analyze((m,p,d,t,u,i,a),lineCtr):
             msg = "User '" + u + "' successfully logged in."
             G.events.addStatistic(m,u,p,[u,'login',i,p,(d,t,lineCtr+1)])
             if G.printFlag == 1: #for testing purposes
-                print msg, lineCtr+1
+                print(msg, lineCtr+1)
         G.events.incUsrInstance(m,u)
     elif a == 'disconnected.' or a == 'could not send reply, disconnected.': #######DISCONNECT#######
         G.events.decUsrInstance(m,u)
@@ -1140,7 +1141,7 @@ def analyze((m,p,d,t,u,i,a),lineCtr):
             msg = "User '" + u + "' disconnected."
             G.events.addStatistic(m,u,p,[u,'disconnect',i,p,(d,t,lineCtr+1)])
             if G.printFlag == 1:
-                print msg, lineCtr+1
+                print(msg, lineCtr+1)
     elif parsedAction[0] == 'RNFR': #######RENAME FROM#######
         A = G.events.getLatestAction(m,u,p)
         G.events.holdStatistic(m,u,p,[u,'rename from',i,p,G.events.getCWD(m,u,p), \
@@ -1171,7 +1172,7 @@ def analyze((m,p,d,t,u,i,a),lineCtr):
                 msg = G.events.getStored(m,u,p,True)
                 G.events.updateStatistic(m,u,p,1,(d,t,lineCtr+1))
         if G.printFlag == 1:
-            print msg, lineCtr+1
+            print(msg, lineCtr+1)
     elif parsedAction[0] == '226' and ((parsedAction[1] == 'ABOR' and parsedAction[2] == 'command') or \
                                        (parsedAction[1] == 'Transfer' and (parsedAction[2] == 'OK' or \
                                                                            parsedAction[2] == 'OK,'))):
@@ -1197,7 +1198,7 @@ def analyze((m,p,d,t,u,i,a),lineCtr):
             G.events.addCWD(m,u,p,grabInParen(a,lineCtr))
             msg = "User '" + u + "' moved to directory '" + grabInParen(a,lineCtr) + "'." 
             if G.printFlag == 1:
-                print msg, lineCtr+1
+                print(msg, lineCtr+1)
     elif parsedAction[0] == 'RETR': #######DOWNLOAD#######
         if G.events.ifSuspend(m,u,p):
             A = G.events.getLatestAction(m,u,p)
@@ -1263,7 +1264,7 @@ def analyze((m,p,d,t,u,i,a),lineCtr):
         msg = G.events.getStored(m,u,p,True)
         G.events.updateStatistic(m,u,p,1,(d,t,lineCtr+1))
         if G.printFlag == 1:
-            print msg, lineCtr+1
+            print(msg, lineCtr+1)
     elif parsedAction[0] == '425' and parsedAction[1] == "Can't" and parsedAction[2] == 'open':
         tempM = G.events.getStored(m,u,p,True)
         if grabAfterUser(tempM,2) == 'began downloading':
@@ -1579,10 +1580,10 @@ def decipherParseParam(param):
     
     numList = param.split('-')
     if len(numList) > 2:
-        print "There can only be 1 hyphen(-) in flag 'p's parameter. Try again."
+        print("There can only be 1 hyphen(-) in flag 'p's parameter. Try again.")
         exit()
     if numList[0] == '' and numList[1] == '':
-        print "Must specify line number with hyphen(-) in flag 'p's parameter. Try again."
+        print("Must specify line number with hyphen(-) in flag 'p's parameter. Try again.")
         exit()
     if numList[0] == '': # -num
         G.parseTill = int(numList[1])
@@ -1592,7 +1593,7 @@ def decipherParseParam(param):
         G.parseFrom = int(numList[0])
         G.parseTill = int(numList[1])
         if G.parseFrom > G.parseTill:
-            print "Second line number must be greater than first in flag 'p's parameter! Try again."
+            print("Second line number must be greater than first in flag 'p's parameter! Try again.")
             exit()
             
         
@@ -1627,7 +1628,7 @@ def processFlags(argv):
             try:
                 G.specifiedLineNum = int(G.pParam)
             except:
-                print "Flag 'p' requires line number. See README. Terminating..."
+                print("Flag 'p' requires line number. See README. Terminating...")
                 exit()
                 
     if fM.flagPresent('h'):
@@ -1661,10 +1662,10 @@ def processFlags(argv):
     
 #will continue to loop if invalid input, once proper input is received, input value is returned 
 def confirmation(text):
-    yn = raw_input(text)
+    yn = input(text)
     if yn not in ('y','Y','n','N'):
         while True:
-            yn = raw_input("Incorrect input! Re-enter choice(Y/N): ")
+            yn = input("Incorrect input! Re-enter choice(Y/N): ")
             if yn in ('y','Y','n','N'):
                 break
     return yn
@@ -1793,7 +1794,7 @@ def pathManager(fileName,writingMode,askedForGoAhead,showedOverwriting,filesThat
     
     if not os.path.exists(G.filterLogDir + os.sep + G.subDir):
         os.makedirs(G.filterLogDir + os.sep + G.subDir)
-        print "Writing", G.filterFilePath + "..."
+        print("Writing", G.filterFilePath + "...")
         goAhead = True
     elif os.path.exists(G.filterFilePath):
         if not G.FFlag:
@@ -1801,17 +1802,17 @@ def pathManager(fileName,writingMode,askedForGoAhead,showedOverwriting,filesThat
                 askedForGoAhead.append(G.filterFilePath)
                 yn = confirmation(G.filterFilePath + " exists, OK to overwrite? (Y/N)")
                 if yn in ('N','n'):
-                    print G.filterFilePath, "not overwritten."
+                    print(G.filterFilePath, "not overwritten.")
                 else:
-                    print "Overwriting", G.filterFilePath + "..."
+                    print("Overwriting", G.filterFilePath + "...")
                     goAhead = True
         else:
             if G.filterFilePath in filesThatExistedBeforeExe and G.filterFilePath not in showedOverwriting:
                 showedOverwriting.append(G.filterFilePath)
-                print "Overwriting", G.filterFilePath + "..."
+                print("Overwriting", G.filterFilePath + "...")
             goAhead = True
     else:
-        print "Writing", G.filterFilePath + "..."
+        print("Writing", G.filterFilePath + "...")
         goAhead = True
         
     return G.filterFilePath,goAhead,askedForGoAhead,showedOverwriting,filesThatExistedBeforeExe  
@@ -1821,7 +1822,7 @@ def removeEmptyFiles(createdFileNames):
     
     for i in range(len(createdFileNames)):
         if os.path.getsize(G.filterLogDir + os.sep + G.subDir + os.sep + createdFileNames[i]) == 0:
-            print G.filterLogDir + os.sep + G.subDir + os.sep + createdFileNames[i], "is empty. Removing..."
+            print(G.filterLogDir + os.sep + G.subDir + os.sep + createdFileNames[i], "is empty. Removing...")
             os.remove(G.filterLogDir + os.sep + G.subDir + os.sep + createdFileNames[i])
         
 def writeLog(loginLineNum,discLineNum):
@@ -1840,12 +1841,12 @@ def writeLog(loginLineNum,discLineNum):
             if os.path.exists(G.parsedFile):
                 yn = confirmation(G.parsedFile + " exists, OK to overwrite? (Y/N)")
                 if yn in ('N','n'):
-                    print G.parsedFile, "not overwritten."
+                    print(G.parsedFile, "not overwritten.")
                 else:
-                    print "Overwriting", G.parsedFile + "..."
+                    print("Overwriting", G.parsedFile + "...")
                     goAhead = True
             else:
-                print "Writing parsedLog.log..."
+                print("Writing parsedLog.log...")
                 goAhead = True
             
                 
@@ -1855,12 +1856,12 @@ def writeLog(loginLineNum,discLineNum):
         if not G.fFlag:
             if not askedForPConf:
                 if os.path.exists(G.parsedFile):
-                    print "Overwriting parsedLog.log..."
+                    print("Overwriting parsedLog.log...")
                 else:
-                    print "Writing parsedLog.log..."
+                    print("Writing parsedLog.log...")
             w = open(G.parsedFile, 'w')
         else:
-            print "Filtering..."
+            print("Filtering...")
             G.filterLogDir = 'FL-' + G.logFile.split(os.sep)[-1]
         f = open(G.logFile)
         G.lC = 1
@@ -1956,23 +1957,23 @@ def initialize():
     G.unscrambleableIPs.append(ipcalc.Network('169.254.0.0/16')) #Link-local addresses
     
 def displayHelpMessage():
-    print "========================================="
-    print "FileZilla Log Analyzer version 1.10 Alpha"
-    print "See README for details. Brief overview of flags:"
-    print "-p --parse <line number> = parse original log by splitting at login/logout for the session that",\
-        "corresponds with the line number"
-    print "-s --scramble <[f],[u],[v],[i]> = f: scramble file/folder names"
-    print "                                  u: scramble user names"
-    print "                                  v: scramble user names in number format"
-    print "                                  i: scramble ip addresses"
-    print "-f --filter <[u],[i],[d],[p]> = u: by user name"
-    print "                                i: by IP address"
-    print "                                d: by date"
-    print "                                p: by port"
-    print "-d = display login/logout instances"
-    print "-F = force execution, if a file is going to be overwritten, prompts for overwriting are withheld and the file is",\
-        "overwritten"
-    print "========================================="
+    print("=========================================")
+    print("FileZilla Log Analyzer version 1.10 Alpha")
+    print("See README for details. Brief overview of flags:")
+    print("-p --parse <line number> = parse original log by splitting at login/logout for the session that",\
+        "corresponds with the line number")
+    print("-s --scramble <[f],[u],[v],[i]> = f: scramble file/folder names")
+    print("                                  u: scramble user names")
+    print("                                  v: scramble user names in number format")
+    print("                                  i: scramble ip addresses")
+    print("-f --filter <[u],[i],[d],[p]> = u: by user name")
+    print("                                i: by IP address")
+    print("                                d: by date")
+    print("                                p: by port")
+    print("-d = display login/logout instances")
+    print("-F = force execution, if a file is going to be overwritten, prompts for overwriting are withheld and the file is",\
+        "overwritten")
+    print("=========================================")
     
 def processAndExecute(argv,nextArg):
     """Handles processing and analyzing depending on what flags were specified."""
@@ -1997,20 +1998,20 @@ def processAndExecute(argv,nextArg):
         elif G.fFlag:
             writeLog(loginInst,discInst)
         else: #just in case something wasn't set properly for some reason...
-            print "Flags were set improperly, contact software developer(s)! SEE README for contact info."
+            print("Flags were set improperly, contact software developer(s)! SEE README for contact info.")
         
     else:
-        print "Analyzing " + G.logFile + "..."
+        print("Analyzing " + G.logFile + "...")
         for line in f:
             try:
                 (m,p,d,t,u,i,a) = FLAmodule.getLine(line)
             except ValueError:
-                print "The file's formatting is funky at line " + str(G.line) + \
-                    "... Must use an original FileZilla Server log file! Terminating..."
+                print("The file's formatting is funky at line " + str(G.line) + \
+                    "... Must use an original FileZilla Server log file! Terminating...")
                 exit()
-            except Exception, e:
-                print "Exception " + str(e) + " occurred at line " + str(G.line) + ". Please report this issue at " \
-                "https://github.com/Stunner/FileZilla-Log-Analyzer/issues and provide a scrambled version of the log file you are using."
+            except Exception as e:
+                print("Exception " + str(e) + " occurred at line " + str(G.line) + ". Please report this issue at " \
+                "https://github.com/Stunner/FileZilla-Log-Analyzer/issues and provide a scrambled version of the log file you are using.")
                 raise
             if lineCtr == 0: #if first run
                 G.events = evntLst(m,p,d,t,u,i,a,lineCtr)
@@ -2045,7 +2046,7 @@ def processAndExecute(argv,nextArg):
         try:
             G.events.compileAnalyzedActions()
         except AttributeError:
-            print "Log file specified seems to be empty. Must use a log file with at least one line. Terminating..."
+            print("Log file specified seems to be empty. Must use a log file with at least one line. Terminating...")
             exit()
         ########END REQUIRE#########
         G.events.createLists()
@@ -2066,8 +2067,8 @@ def processAndExecute(argv,nextArg):
                     else:
                         parseByLoginResults = G.events.parseByLogin()
                         if parseByLoginResults == None:
-                            print "Invalid line number!" + \
-                                  "A user must be logged in at provided line number to parse user's login instance."
+                            print("Invalid line number!" + \
+                                  "A user must be logged in at provided line number to parse user's login instance.")
                             exit()
                         elif parseByLoginResults[1] == '---': #user disconnection doesn't occur, so simply parse from login to end
                             G.parseFrom = int(parseByLoginResults[0])
@@ -2092,22 +2093,22 @@ def processAndExecute(argv,nextArg):
 def main(argv):
     nextArg = 0
     if len(argv) < 2:
-        print "Usage: python " + argv[0] + " [flags] <log file>"
+        print("Usage: python " + argv[0] + " [flags] <log file>")
         exit()
     initialize()
     #catch errors raised by flagHandler
     try:
         nextArg = processFlags(argv)
     except flagHandler.FlagError as e:
-        print "FlagError:",e
+        print("FlagError:",e)
         exit()
     except flagHandler.ParamError as e:
-        print "ParamError:",e
+        print("ParamError:",e)
         exit()
 
     processAndExecute(argv,nextArg)
 
 
 if __name__ == '__main__':
-    print "Must run FLA.py instead of " + sys.argv[0] + "! Exiting..."
+    print("Must run FLA.py instead of " + sys.argv[0] + "! Exiting...")
     exit()

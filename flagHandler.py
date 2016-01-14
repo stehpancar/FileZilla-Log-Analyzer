@@ -119,7 +119,7 @@ class flagConstraints:
         if self.__errorCheck(allFlags):
             self.__allowable = self.__allowableFromUser
             tempDict = {}
-            for k,v in self.__forbiddenFromUser.items():
+            for k,v in list(self.__forbiddenFromUser.items()):
                 tempDict[k] = subtractFromList(v,allFlags)
             self.__allowable.update(tempDict)
             
@@ -129,7 +129,7 @@ class flagConstraints:
            
         DCL = [] #(disobeying constraint list)
         inputFlagsOmittingK = []
-        for k,v in flagDict.items():
+        for k,v in list(flagDict.items()):
             inputFlagsOmittingK.append(k)
         #inputFlagsOmittingK = list(inputFlags)
         inputFlagsOmittingK.remove(key)
@@ -143,8 +143,8 @@ class flagConstraints:
         """Creates dictionary of all input flags that have defied constraints."""
         
         #inputFlags = list(G.flags)
-        for k1,v1 in flagDict.items():
-            for k2,v2 in self.__allowable.items():
+        for k1,v1 in list(flagDict.items()):
+            for k2,v2 in list(self.__allowable.items()):
                 if k1 == k2:
                     disobeyingConstraintList = list(set(flagDict) - set(v2))
                     #disobeyingConstraintList = self.__checkKFlagConstraints(k2,v2,flagDict)
@@ -153,7 +153,7 @@ class flagConstraints:
                         
     def _raiseDCDErrors(self):
         if self.__disobeyingConstraintDict != {}:
-            for k,v in self.__disobeyingConstraintDict.items():
+            for k,v in list(self.__disobeyingConstraintDict.items()):
                 if len(k) == 1:
                     kToDisplay = "-" + k
                 elif len(k) > 1:
@@ -424,7 +424,7 @@ class flagManager:
     
     def __makeFlagDict(self):
         for i in range(len(self.__flagToParamList)):
-            for k,v in self.__flagToParamList[i].items():
+            for k,v in list(self.__flagToParamList[i].items()):
                 try: #retrieving established flag index value
                     garbageVal = self.__flagDict[k]
                     return True #duplicate flags found
@@ -441,11 +441,11 @@ class flagManager:
             self.__nextIndex = None
             
     def __checkParamConstraints(self):
-        for k1,v1 in self.__flagDict.items():
-            for k2,v2 in self.__paramConstraints.getConstraints().items():
+        for k1,v1 in list(self.__flagDict.items()):
+            for k2,v2 in list(self.__paramConstraints.getConstraints().items()):
                 if k1 == k2:
                     if self.__paramConstraints.getTreatCharsIndividually():
-                        for k3,v3 in v2[1].items():
+                        for k3,v3 in list(v2[1].items()):
                             if k3 in v1: #if 'u' of {'u':['v']} in 'fui', check to see if bad param exists
                                 for i in range(len(v3)): #s's parameters(i.e fui)
                                     if v3[i] in v1:
@@ -456,8 +456,8 @@ class flagManager:
     def __enforceParamConstraints(self):
         """Checks if parameter constraints are obeyed, if not raises exceptions."""
         
-        for k1,v1 in self.__flagDict.items():
-            for k2,v2 in self.__paramConstraints.getAllowableParamDict().items():
+        for k1,v1 in list(self.__flagDict.items()):
+            for k2,v2 in list(self.__paramConstraints.getAllowableParamDict().items()):
                 if k1 == k2:
                     if self.__paramConstraints.getTreatCharsIndividually() and len(v1)>1:
                         for i in range(len(v1)):
@@ -590,13 +590,13 @@ def intersection(a,b):
     return set(a) & set(b)
     
 def isInDenyDictKeys(item,forbidden):
-    for key in forbidden.keys():
+    for key in list(forbidden.keys()):
         if item == key:
             return True,forbidden[key]
     return False, None
     
 def conflictingConstraints(allowable,forbidden):
-    for k1,v1 in allowable.items():
+    for k1,v1 in list(allowable.items()):
         for i in range(len(v1)):
             boolVal,keyVal = isInDenyDictKeys(v1[i],forbidden)
             if boolVal:
@@ -605,7 +605,7 @@ def conflictingConstraints(allowable,forbidden):
     return False
 
 def dictKeysAndValuesWithinSpecifiedList(dictionary,dictValueList):
-    for k,v in dictionary.items():
+    for k,v in list(dictionary.items()):
         if not foundInList(k,dictValueList):
             return False
         for i in range(len(v)):
@@ -614,7 +614,7 @@ def dictKeysAndValuesWithinSpecifiedList(dictionary,dictValueList):
     return True
     
 def properDictValue(dictionary):
-    for k,v in dictionary.items():
+    for k,v in list(dictionary.items()):
         if type(v) != list:
             return False
     return True
@@ -655,9 +655,9 @@ def sameItemInBothLists(obj1,obj2):
 def sameKeyInBothDicts(dict1,dict2):
     dict1Keys = []
     dict2Keys = []
-    for key1 in dict1.iterkeys():
+    for key1 in dict1.keys():
         dict1Keys.append(key1)
-    for key2 in dict2.iterkeys():
+    for key2 in dict2.keys():
         dict2Keys.append(key2)
     return sameItemInBothLists(dict1Keys,dict2Keys)
     
@@ -894,7 +894,7 @@ if __name__ == '__main__':
                                                                                'scramble':( {} , {'u':['v']} ) })
     fM = flagManager(['p','parse','f','filter','d','F','s','scramble'],['p','parse','f','filter','s','scramble'],\
                      ['FLA.py','--parse=-300','--scramble=fu','../../../../Programming/Projects/FLA/LOGS/fzs-2009-04-23.log'],pC,fC)
-    print fM.getNextIndex()
+    print(fM.getNextIndex())
     #flghndle = flagManager(['p','i','u','f','d','F'],['p','d','f'],['FlA', '-pdf', 'path', 'directory','f'])
 
 
